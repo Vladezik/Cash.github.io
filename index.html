@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Подсчет денег</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap">
+</head>
+<body class="light-theme">
+    <div class="container">
+        <!-- Заголовок с кнопками -->
+        <div class="header">
+            <button id="themeToggleButton" class="icon-button" aria-label="Переключить тему">
+                <i class="fas fa-moon"></i>
+            </button>
+            <div class="spacer"></div>
+            <button id="resetButton" class="reset-button">Очистить</button>
+        </div>
+
+        <!-- Поле для ввода целевой суммы -->
+        <div class="input-section">
+            <label for="targetAmount">Введите целевую сумму</label>
+            <div class="input-container">
+                <input type="text" id="targetAmount" placeholder="0.00" inputmode="decimal">
+            </div>
+        </div>
+
+        <!-- Карточка для ввода номиналов -->
+        <div class="card">
+            <h2>Ввод купюр</h2>
+            
+            <!-- Номинал 1000 -->
+            <div class="denomination-row">
+                <span class="denomination-label">1000</span>
+                <div class="input-wrapper">
+                    <input type="number" id="denom1000" placeholder="Кол-во" min="0" inputmode="numeric">
+                </div>
+                <span id="sum1000" class="sum-text">0</span>
+            </div>
+            
+            <!-- Номинал 500 -->
+            <div class="denomination-row">
+                <span class="denomination-label">500</span>
+                <div class="input-wrapper">
+                    <input type="number" id="denom500" placeholder="Кол-во" min="0" inputmode="numeric">
+                </div>
+                <span id="sum500" class="sum-text">0</span>
+            </div>
+            
+            <!-- Номинал 200 -->
+            <div class="denomination-row">
+                <span class="denomination-label">200</span>
+                <div class="input-wrapper">
+                    <input type="number" id="denom200" placeholder="Кол-во" min="0" inputmode="numeric">
+                </div>
+                <span id="sum200" class="sum-text">0</span>
+            </div>
+            
+            <!-- Номинал 100 -->
+            <div class="denomination-row">
+                <span class="denomination-label">100</span>
+                <div class="input-wrapper">
+                    <input type="number" id="denom100" placeholder="Кол-во" min="0" inputmode="numeric">
+                </div>
+                <span id="sum100" class="sum-text">0</span>
+            </div>
+            
+            <!-- Номинал 50 -->
+            <div class="denomination-row">
+                <span class="denomination-label">50</span>
+                <div class="input-wrapper">
+                    <input type="number" id="denom50" placeholder="Кол-во" min="0" inputmode="numeric">
+                </div>
+                <span id="sum50" class="sum-text">0</span>
+            </div>
+            
+            <!-- Номинал 20 -->
+            <div class="denomination-row">
+                <span class="denomination-label">20</span>
+                <div class="input-wrapper">
+                    <input type="number" id="denom20" placeholder="Кол-во" min="0" inputmode="numeric">
+                </div>
+                <span id="sum20" class="sum-text">0</span>
+            </div>
+            
+            <!-- Номинал 10 -->
+            <div class="denomination-row">
+                <span class="denomination-label">10</span>
+                <div class="input-wrapper">
+                    <input type="number" id="denom10" placeholder="Кол-во" min="0" inputmode="numeric">
+                </div>
+                <span id="sum10" class="sum-text">0</span>
+            </div>
+            
+            <!-- Номинал 5 -->
+            <div class="denomination-row">
+                <span class="denomination-label">5</span>
+                <div class="input-wrapper">
+                    <input type="number" id="denom5" placeholder="Кол-во" min="0" inputmode="numeric">
+                </div>
+                <span id="sum5" class="sum-text">0</span>
+            </div>
+            
+            <!-- Номинал 2 -->
+            <div class="denomination-row">
+                <span class="denomination-label">2</span>
+                <div class="input-wrapper">
+                    <input type="number" id="denom2" placeholder="Кол-во" min="0" inputmode="numeric">
+                </div>
+                <span id="sum2" class="sum-text">0</span>
+            </div>
+            
+            <!-- Номинал 1 -->
+            <div class="denomination-row">
+                <span class="denomination-label">1</span>
+                <div class="input-wrapper">
+                    <input type="number" id="denom1" placeholder="Кол-во" min="0" inputmode="numeric">
+                </div>
+                <span id="sum1" class="sum-text">0</span>
+            </div>
+        </div>
+
+        <!-- Кнопка расчета -->
+        <button id="calculateButton" class="calculate-button">Рассчитать</button>
+
+        <!-- Карточка с результатами -->
+        <div id="resultCard" class="card result-card hidden">
+            <h2>Результаты</h2>
+            
+            <!-- Результаты по номиналам -->
+            <div id="denomResults" class="results-text"></div>
+            
+            <!-- Разделитель -->
+            <div class="divider"></div>
+            
+            <!-- Итоговая сумма -->
+            <div class="total-row">
+                <span class="total-label">Итого:</span>
+                <span id="totalAmount" class="total-amount">0</span>
+            </div>
+            
+            <!-- Разница -->
+            <div class="difference-row">
+                <span class="difference-label">Разница:</span>
+                <span id="difference" class="difference-amount">0</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Диалог подтверждения очистки -->
+    <div id="confirmDialog" class="dialog-overlay hidden">
+        <div class="dialog">
+            <h3>Очистка</h3>
+            <p>Вы уверены, что хотите очистить все данные?</p>
+            <div class="dialog-buttons">
+                <button id="confirmYes" class="dialog-button dialog-button-primary">Да</button>
+                <button id="confirmNo" class="dialog-button">Нет</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Уведомление -->
+    <div id="toast" class="toast hidden"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
