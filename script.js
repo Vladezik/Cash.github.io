@@ -21,10 +21,6 @@ document.addEventListener('DOMContentLoaded', function() {
         { id: 'denom100', value: 100, sumId: 'sum100' },
         { id: 'denom50', value: 50, sumId: 'sum50' },
         { id: 'denom20', value: 20, sumId: 'sum20' },
-        { id: 'denom10', value: 10, sumId: 'sum10' },
-        { id: 'denom5', value: 5, sumId: 'sum5' },
-        { id: 'denom2', value: 2, sumId: 'sum2' },
-        { id: 'denom1', value: 1, sumId: 'sum1' }
     ];
 
     // Состояние приложения
