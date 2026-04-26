@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const confirmNoButton = document.getElementById('confirmNo');
     const toast = document.getElementById('toast');
 
-    // Элементы для номиналов
+    // Элементы для номиналов (добавлена Мелочь = 1)
     const denominations = [
         { id: 'denom1000', value: 1000, sumId: 'sum1000' },
         { id: 'denom500', value: 500, sumId: 'sum500' },
@@ -21,6 +21,7 @@ document.addEventListener('DOMContentLoaded', function() {
         { id: 'denom100', value: 100, sumId: 'sum100' },
         { id: 'denom50', value: 50, sumId: 'sum50' },
         { id: 'denom20', value: 20, sumId: 'sum20' },
+        { id: 'denom1', value: 1, sumId: 'sum1', label: 'Мелочь' } // Новый номинал
     ];
 
     // Состояние приложения
@@ -337,7 +338,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 totalAmount += sum;
                 
                 // Формируем результаты в формате "количествошт.| номинал | сумма"
-                resultsHTML += `<div>${count}шт.| ${denom.value} | ${formatNumber(sum)}</div>`;
+                // Для Мелочи показываем слово "Мелочь" вместо цифры 1
+                const label = denom.label || denom.value;
+                resultsHTML += `<div>${count}шт.| ${label} | ${formatNumber(sum)}</div>`;
             });
             
             // Рассчитываем разницу
