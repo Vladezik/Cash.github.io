@@ -3,116 +3,166 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Касса — Подсчет</title>
+    <title>Подсчет денег</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap">
 </head>
-<body class="dark-theme">
-    <div class="app">
-        <header class="app-header">
-            <button id="themeToggle" class="icon-btn" aria-label="Тема">
-                <i class="fas fa-sun"></i>
+<body class="light-theme">
+    <div class="container">
+        <!-- Заголовок с кнопками -->
+        <div class="header">
+            <button id="themeToggleButton" class="icon-button" aria-label="Переключить тему">
+                <i class="fas fa-moon"></i>
             </button>
-            <h1 class="app-title">Касса</h1>
-            <button id="historyToggle" class="icon-btn" aria-label="История">
-                <i class="fas fa-history"></i>
-            </button>
-        </header>
+            <div class="spacer"></div>
+            <button id="resetButton" class="reset-button">Очистить</button>
+        </div>
 
-        <section class="target-section">
-            <label class="section-label">Целевая сумма</label>
-            <div class="target-input-wrap">
-                <input type="text" id="targetAmount" placeholder="0.00" inputmode="decimal" autocomplete="off">
-                <span class="currency">₴</span>
-            </div>
-            
-            <div class="progress-box" id="progressBox">
-                <div class="progress-info">
-                    <span>Набрано: <strong id="progressCurrent">0.00</strong> ₴</span>
-                    <span id="progressPercent">0%</span>
-                </div>
-                <div class="progress-track">
-                    <div class="progress-fill" id="progressFill" style="width: 0%"></div>
-                </div>
-            </div>
-        </section>
-
-        <section class="denoms-section">
-            <label class="section-label">Номиналы</label>
-            <div class="denoms-grid" id="denomsGrid"></div>
-        </section>
-
-        <button id="calculateBtn" class="btn-primary">
-            <i class="fas fa-calculator"></i>
-            <span>Рассчитать</span>
-        </button>
-
-        <div id="resultCard" class="result-card hidden">
-            <div class="receipt">
-                <div class="receipt-header">
-                    <i class="fas fa-receipt"></i>
-                    <span>КАССОВЫЙ ЧЕК</span>
-                </div>
-                <div class="receipt-divider"></div>
-                <div id="receiptBody" class="receipt-body"></div>
-                <div class="receipt-divider dashed"></div>
-                <div class="receipt-total-row">
-                    <span>ИТОГО</span>
-                    <span id="receiptTotal">0.00 ₴</span>
-                </div>
-                <div class="receipt-diff-row" id="receiptDiffRow">
-                    <span>РАЗНИЦА</span>
-                    <span id="receiptDiff">0.00 ₴</span>
-                </div>
-                <div class="receipt-time" id="receiptTime"></div>
-            </div>
-            
-            <div class="result-actions">
-                <button id="saveToHistoryBtn" class="btn-secondary" style="flex: none; width: 100%;">
-                    <i class="fas fa-save"></i> В историю
-                </button>
+        <!-- Поле для ввода целевой суммы -->
+        <div class="input-section">
+            <label for="targetAmount">Введите целевую сумму</label>
+            <div class="input-container">
+                <input type="text" id="targetAmount" placeholder="0.00" inputmode="decimal">
             </div>
         </div>
 
-        <button id="resetBtn" class="btn-text-danger">
-            <i class="fas fa-trash-alt"></i> Очистить все
-        </button>
-    </div>
-
-    <div id="historySheet" class="sheet hidden">
-        <div class="sheet-overlay"></div>
-        <div class="sheet-content">
-            <div class="sheet-handle"></div>
-            <div class="sheet-header">
-                <h3>История подсчетов</h3>
-                <div style="display: flex; gap: 8px;">
-                    <button id="exportHistoryBtn" class="btn-text-small" title="Экспортировать">
-                        <i class="fas fa-download"></i>
-                    </button>
-                    <button id="clearHistoryBtn" class="btn-text-small">Очистить</button>
+        <!-- Карточка для ввода номиналов -->
+        <div class="card">
+            <h2>Ввод купюр</h2>
+            
+            <!-- Номинал 1000 -->
+            <div class="denomination-row">
+                <span class="denomination-label">1000</span>
+                <div class="input-wrapper">
+                    <input type="number" id="denom1000" placeholder="Кол-во" min="0" inputmode="numeric">
                 </div>
+                <span id="sum1000" class="sum-text">0</span>
             </div>
-            <div id="historyList" class="history-list">
-                <div class="history-empty">История пуста</div>
+            
+            <!-- Номинал 500 -->
+            <div class="denomination-row">
+                <span class="denomination-label">500</span>
+                <div class="input-wrapper">
+                    <input type="number" id="denom500" placeholder="Кол-во" min="0" inputmode="numeric">
+                </div>
+                <span id="sum500" class="sum-text">0</span>
+            </div>
+            
+            <!-- Номинал 200 -->
+            <div class="denomination-row">
+                <span class="denomination-label">200</span>
+                <div class="input-wrapper">
+                    <input type="number" id="denom200" placeholder="Кол-во" min="0" inputmode="numeric">
+                </div>
+                <span id="sum200" class="sum-text">0</span>
+            </div>
+            
+            <!-- Номинал 100 -->
+            <div class="denomination-row">
+                <span class="denomination-label">100</span>
+                <div class="input-wrapper">
+                    <input type="number" id="denom100" placeholder="Кол-во" min="0" inputmode="numeric">
+                </div>
+                <span id="sum100" class="sum-text">0</span>
+            </div>
+            
+            <!-- Номинал 50 -->
+            <div class="denomination-row">
+                <span class="denomination-label">50</span>
+                <div class="input-wrapper">
+                    <input type="number" id="denom50" placeholder="Кол-во" min="0" inputmode="numeric">
+                </div>
+                <span id="sum50" class="sum-text">0</span>
+            </div>
+            
+            <!-- Номинал 20 -->
+            <div class="denomination-row">
+                <span class="denomination-label">20</span>
+                <div class="input-wrapper">
+                    <input type="number" id="denom20" placeholder="Кол-во" min="0" inputmode="numeric">
+                </div>
+                <span id="sum20" class="sum-text">0</span>
+            </div>
+            
+            <!-- Номинал 10 -->
+            <div class="denomination-row">
+                <span class="denomination-label">10</span>
+                <div class="input-wrapper">
+                    <input type="number" id="denom10" placeholder="Кол-во" min="0" inputmode="numeric">
+                </div>
+                <span id="sum10" class="sum-text">0</span>
+            </div>
+            
+            <!-- Номинал 5 -->
+            <div class="denomination-row">
+                <span class="denomination-label">5</span>
+                <div class="input-wrapper">
+                    <input type="number" id="denom5" placeholder="Кол-во" min="0" inputmode="numeric">
+                </div>
+                <span id="sum5" class="sum-text">0</span>
+            </div>
+            
+            <!-- Номинал 2 -->
+            <div class="denomination-row">
+                <span class="denomination-label">2</span>
+                <div class="input-wrapper">
+                    <input type="number" id="denom2" placeholder="Кол-во" min="0" inputmode="numeric">
+                </div>
+                <span id="sum2" class="sum-text">0</span>
+            </div>
+            
+            <!-- Номинал 1 -->
+            <div class="denomination-row">
+                <span class="denomination-label">1</span>
+                <div class="input-wrapper">
+                    <input type="number" id="denom1" placeholder="Кол-во" min="0" inputmode="numeric">
+                </div>
+                <span id="sum1" class="sum-text">0</span>
+            </div>
+        </div>
+
+        <!-- Кнопка расчета -->
+        <button id="calculateButton" class="calculate-button">Рассчитать</button>
+
+        <!-- Карточка с результатами -->
+        <div id="resultCard" class="card result-card hidden">
+            <h2>Результаты</h2>
+            
+            <!-- Результаты по номиналам -->
+            <div id="denomResults" class="results-text"></div>
+            
+            <!-- Разделитель -->
+            <div class="divider"></div>
+            
+            <!-- Итоговая сумма -->
+            <div class="total-row">
+                <span class="total-label">Итого:</span>
+                <span id="totalAmount" class="total-amount">0</span>
+            </div>
+            
+            <!-- Разница -->
+            <div class="difference-row">
+                <span class="difference-label">Разница:</span>
+                <span id="difference" class="difference-amount">0</span>
             </div>
         </div>
     </div>
 
+    <!-- Диалог подтверждения очистки -->
     <div id="confirmDialog" class="dialog-overlay hidden">
         <div class="dialog">
-            <div class="dialog-icon"><i class="fas fa-exclamation-triangle"></i></div>
-            <h3>Очистить все?</h3>
-            <p>Все введенные данные и текущий расчет будут удалены.</p>
+            <h3>Очистка</h3>
+            <p>Вы уверены, что хотите очистить все данные?</p>
             <div class="dialog-buttons">
-                <button id="confirmNo" class="btn-dialog">Отмена</button>
-                <button id="confirmYes" class="btn-dialog btn-dialog-primary">Очистить</button>
+                <button id="confirmYes" class="dialog-button dialog-button-primary">Да</button>
+                <button id="confirmNo" class="dialog-button">Нет</button>
             </div>
         </div>
     </div>
 
+    <!-- Уведомление -->
     <div id="toast" class="toast hidden"></div>
-    <div id="confettiContainer" class="confetti-container"></div>
 
     <script src="script.js"></script>
 </body>
