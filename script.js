@@ -227,12 +227,14 @@ class CashApp {
         this.updateProgress();
     }
 
+    // === ИСПРАВЛЕНО: добавлена инициализация currentX ===
     setupSwipe(card) {
         let startX = 0;
         let currentX = 0;
         
         card.addEventListener('touchstart', (e) => {
             startX = e.touches[0].clientX;
+            currentX = startX; // <-- исправление
             card.style.transition = 'none';
         }, { passive: true });
         
@@ -462,7 +464,6 @@ class CashApp {
         setTimeout(() => container.innerHTML = '', 4000);
     }
 
-    // === ИЗМЕНЕНО: сохраняем номиналы в историю ===
     saveCurrentToHistory() {
         const target = this.parseTarget();
         const current = this.calculateCurrentTotal();
@@ -501,7 +502,6 @@ class CashApp {
         }
     }
 
-    // === ИЗМЕНЕНО: отображаем номиналы в истории ===
     renderHistory() {
         const history = this.getHistory();
         const list = this.dom.historyList;
@@ -581,7 +581,6 @@ class CashApp {
         return div.innerHTML;
     }
 
-    // === ИЗМЕНЕНО: загружаем номиналы и сразу считаем ===
     loadHistoryItem(id) {
         const history = this.getHistory();
         const item = history.find(h => h.id === id);
